@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SneakerStore.Services/SneakerStore.Services.csproj" />
+  </Folder>
+</Solution>

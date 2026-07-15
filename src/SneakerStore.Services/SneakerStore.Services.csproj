@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Models\Order.cs~RFf10ec6f.TMP" />
+    <None Remove="Models\Order.cs~RFf348c4f.TMP" />
+    <None Remove="Models\OrderItem.cs~RFf13416b.TMP" />
+    <None Remove="Models\Review.cs~RFf14ebc0.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Cart\" />
+    <Folder Include="Views\User\" />
+    <Folder Include="Views\Order\" />
+    <Folder Include="Views\Sneaker\" />
+  </ItemGroup>
+
+</Project>
