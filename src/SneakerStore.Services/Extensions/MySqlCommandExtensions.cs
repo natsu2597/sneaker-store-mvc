@@ -3,7 +3,7 @@ using SneakerStore.Services.Models;
 
 namespace SneakerStore.Services.Extensions
 {
-    public static class MySqlCommandExtension
+    public static class MySqlCommandExtensions
     {
         public static void AddUserParameters(this MySqlCommand cmd,User user)
         {
