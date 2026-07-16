@@ -2,6 +2,8 @@
 {
     public enum PaymentMethod
     {
+        None = 0,
+
         COD = 1,
         UPI,
         CreditCard,

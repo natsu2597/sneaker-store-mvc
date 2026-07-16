@@ -20,7 +20,7 @@ namespace SneakerStore.Services.Extensions
                     USE SneakerStore;
                 ";
 
-            var cmd = new MySqlCommand(sql,serverConn);
+            using var cmd = new MySqlCommand(sql,serverConn);
             await cmd.ExecuteNonQueryAsync();
 
             using var conn = dbContext.CreateConnection();
@@ -29,7 +29,7 @@ namespace SneakerStore.Services.Extensions
 
             await InitializeCategoryTableAsync(conn);
             await InitializeBrandsTableAsync(conn);
-            await InitializeUsersTabelAsync(conn);
+            await InitializeUsersTableAsync(conn);
             await InitializeSneakersTableAsync(conn);
             await InitializeSneakerImagesTableAsync(conn);
             await InitializeCartTableAsync(conn);
@@ -79,7 +79,7 @@ namespace SneakerStore.Services.Extensions
             await ExecuteAsync(conn, sql);
         }
 
-        public static async Task InitializeUsersTabelAsync(MySqlConnection conn)
+        public static async Task InitializeUsersTableAsync(MySqlConnection conn)
         {
 
             const string sql = @"
