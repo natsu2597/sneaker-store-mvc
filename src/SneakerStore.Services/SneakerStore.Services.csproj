@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\ApplicationDbContext.cs~RF11b912d8.TMP" />
+    <None Remove="Enums\OrderStatus.cs~RF11fbfa49.TMP" />
+    <None Remove="Extensions\DatabaseExtensions.cs~RF11caeba1.TMP" />
+    <None Remove="Models\Order.cs~RF121a645b.TMP" />
     <None Remove="Models\Order.cs~RFf10ec6f.TMP" />
     <None Remove="Models\Order.cs~RFf348c4f.TMP" />
     <None Remove="Models\OrderItem.cs~RFf13416b.TMP" />
     <None Remove="Models\Review.cs~RFf14ebc0.TMP" />
+    <None Remove="Models\SneakerImages.cs~RF12086ccf.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +24,10 @@
     <Folder Include="Views\User\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Sneaker\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.6.1" />
   </ItemGroup>
 
 </Project>

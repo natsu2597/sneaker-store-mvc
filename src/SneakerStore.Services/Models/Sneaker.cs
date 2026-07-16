@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using SneakerStore.Services.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace SneakerStore.Services.Models
@@ -19,8 +20,7 @@ namespace SneakerStore.Services.Models
         public int Stock { get; set; }
         public string? Color { get; set; }
         public string? Size { get; set; }
-        public string? Gender { get; set; } 
-        public string? MainImageUrl { get; set; }
+        public Gender Gender { get; set; } 
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
         public bool IsFeatured { get; set; }
