@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SneakerStore.Services.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace SneakerStore.Services.Models
@@ -18,7 +19,7 @@ namespace SneakerStore.Services.Models
 
         [Required]
         public string PasswordHash { get; set; } = "";
-        public string Role { get; set; } = "Customer";
+        public UserRole Role { get; set; }
         public string ProfileImage { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

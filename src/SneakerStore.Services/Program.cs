@@ -1,9 +1,18 @@
+using SneakerStore.Services.Data;
+using SneakerStore.Services.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ApplicationDbContext>();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    await app.InitializeDbAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
