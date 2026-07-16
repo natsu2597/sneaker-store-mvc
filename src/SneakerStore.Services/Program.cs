@@ -1,5 +1,6 @@
 using SneakerStore.Services.Data;
 using SneakerStore.Services.Extensions;
+using SneakerStore.Services.Repository;
 using SneakerStore.Services.Services;
 using SneakerStore.Services.Settings;
 
@@ -7,11 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<ApplicationDbContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+
 builder.Services.Configure<CloudinarySettings>(
         builder.Configuration.GetSection("Cloudinary")
     );
-builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 var app = builder.Build();
 

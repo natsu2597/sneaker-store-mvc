@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using SneakerStore.Services.Dtos;
 using SneakerStore.Services.Models;
 
 namespace SneakerStore.Services.Extensions
@@ -17,7 +18,7 @@ namespace SneakerStore.Services.Extensions
             cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage ?? (object)DBNull.Value);
         }
 
-        public static void AddUserParametersUpdate(this MySqlCommand cmd, User user)
+        public static void AddUserParametersUpdate(this MySqlCommand cmd, UpdateUserRequest user)
         {
             cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
             cmd.Parameters.AddWithValue("@LastName", user.LastName);

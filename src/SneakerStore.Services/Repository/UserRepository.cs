@@ -96,9 +96,9 @@ namespace SneakerStore.Services.Repository
             return null;
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<UserResponseDto>> GetAllAsync()
         {
-            var users = new List<User>();
+            var users = new List<UserResponseDto>();
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();
 
@@ -113,7 +113,7 @@ namespace SneakerStore.Services.Repository
             while (await reader.ReadAsync())
             {
                 users.Add(
-                        reader.MapUsers()
+                        reader.MapUserResponseDto()
                     );
             }
 
@@ -159,7 +159,7 @@ namespace SneakerStore.Services.Repository
 
         
 
-        public async Task UpdateAsync(User user)
+        public async Task UpdateAsync(UpdateUserRequest user)
         {
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();

@@ -20,7 +20,7 @@ namespace SneakerStore.Services.Models
         [Required]
         public string PasswordHash { get; set; } = "";
         public UserRole Role { get; set; }
-        public string ProfileImage { get; set; } = string.Empty;
+        public string? ProfileImage { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
