@@ -8,12 +8,12 @@ namespace SneakerStore.Services.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly PasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ICloudinaryService _cloudinaryService;
 
         
 
-        public UserService(IUserRepository userRepository, PasswordHasher<User> passwordHasher,ICloudinaryService cloudinaryService)
+        public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher,ICloudinaryService cloudinaryService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
