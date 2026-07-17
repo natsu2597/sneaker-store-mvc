@@ -19,7 +19,9 @@ namespace SneakerStore.Services.Extensions
                 PasswordHash = reader.GetString("PasswordHash"),
                 Phone = reader.GetString("Phone"),
                 Role = (UserRole)reader.GetInt32("Role"),
-                ProfileImage = reader.GetString("ProfileImage"),
+                ProfileImage = reader.IsDBNull(reader.GetOrdinal("ProfileImage"))
+                ? null
+                : reader.GetString("ProfileImage"),
                 CreatedAt = reader.GetDateTime("CreatedAt")
             };
         }
@@ -41,5 +43,6 @@ namespace SneakerStore.Services.Extensions
 
             };
         }
+
     }
 }

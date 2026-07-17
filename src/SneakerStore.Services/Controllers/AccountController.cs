@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using SneakerStore.Services.Dtos;
 using SneakerStore.Services.Services;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace SneakerStore.Services.Controllers
 {
@@ -36,9 +39,9 @@ namespace SneakerStore.Services.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
-            catch(Exception ex)
+            catch(Exception)
             {
-                ModelState.AddModelError("", ex.Message);
+                ModelState.AddModelError("", "An unxpected error happened please try again later.");
                 return View(request);
             }
         }
@@ -67,20 +70,46 @@ namespace SneakerStore.Services.Controllers
                 }
 
                 TempData["Success"] = "Login successful";
+
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                    new(ClaimTypes.Email, user.Email),
+                    new(ClaimTypes.Role,user.Role.ToString())
+                };
+
+                var identity = new ClaimsIdentity(
+                        claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme
+                    );
+
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        principal
+                    );
+
+
                 return RedirectToAction("Index", "Home");
             }
 
-            catch(Exception ex)
+            catch(UnauthorizedAccessException)
             {
-                ModelState.AddModelError("",ex.Message);
+                ModelState.AddModelError("","Inavlid email or password");
                 return View(request);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                );
+
             return RedirectToAction(nameof(Login));
         }
     }

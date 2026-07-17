@@ -18,7 +18,15 @@ namespace SneakerStore.Services.Extensions
             cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage ?? (object)DBNull.Value);
         }
 
-        public static void AddUserParametersUpdate(this MySqlCommand cmd, UpdateUserRequest user)
+        public static void AddUserParametersUpdate(this MySqlCommand cmd, UpdateProfileRequest user)
+        {
+            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@Phone", user.Phone);
+            cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage ?? (object)DBNull.Value);
+        }
+
+        public static void AddUserParametersUpdate(this MySqlCommand cmd, User user)
         {
             cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
             cmd.Parameters.AddWithValue("@LastName", user.LastName);
