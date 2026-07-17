@@ -7,11 +7,13 @@ namespace SneakerStore.Services.Repository
     {
         Task<int> RegisterAsync(User user);
         Task<UserResponseDto?> GetByIdAsync(int id);
+        Task<User?> GetUserByIdAsync(int id);
         Task<User?> GetByEmailAsync(string email);
         Task<List<UserResponseDto>> GetAllAsync();
         Task<bool> EmailExistsAsync(string email);
         Task<bool> PhoneExistsAsync(string phone);
-        Task UpdateAsync(UpdateUserRequest user);
+        Task UpdateAsync(UpdateProfileRequest request);
+        Task UpdateProfileAsync(User user);
         Task DeleteAsync(int id);
     }
 }

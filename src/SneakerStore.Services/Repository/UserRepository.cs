@@ -1,11 +1,8 @@
 ﻿using MySqlConnector;
 using SneakerStore.Services.Data;
 using SneakerStore.Services.Dtos;
-using SneakerStore.Services.Enums;
 using SneakerStore.Services.Extensions;
 using SneakerStore.Services.Models;
-using System.Data;
-using System.Runtime.InteropServices;
 
 namespace SneakerStore.Services.Repository
 {
@@ -48,7 +45,7 @@ namespace SneakerStore.Services.Repository
             const string sql = @"
                     SELECT 
                         Id,
-                        FistName,
+                        FirstName,
                         LastName,
                         Email,
                         Phone,
@@ -67,6 +64,39 @@ namespace SneakerStore.Services.Repository
             if (await reader.ReadAsync())
             {
                 return reader.MapUserResponseDto();
+            }
+
+            return null;
+        }
+
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            using var conn = _dbContext.CreateConnection();
+            await conn.OpenAsync();
+
+            const string sql = @"
+                    SELECT
+                        Id,
+                        FirstName,
+                        LastName,
+                        Email,
+                        PasswordHash,
+                        Phone,
+                        Role,
+                        ProfileImage,
+                        CreatedAt
+                    FROM Users
+                    WHERE Id = @Id;
+                ";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return reader.MapUsers();
             }
 
             return null;
@@ -135,8 +165,6 @@ namespace SneakerStore.Services.Repository
             using var cmd = new MySqlCommand(sql,conn);
             cmd.Parameters.AddWithValue("@Email",email);
 
-            using var reader = await cmd.ExecuteReaderAsync();
-
             return Convert.ToInt32(await cmd.ExecuteScalarAsync()) > 0;
         }
 
@@ -159,7 +187,7 @@ namespace SneakerStore.Services.Repository
 
         
 
-        public async Task UpdateAsync(UpdateUserRequest user)
+        public async Task UpdateAsync(UpdateProfileRequest user)
         {
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();
@@ -170,11 +198,37 @@ namespace SneakerStore.Services.Repository
                         FirstName = @FirstName,
                         LastName = @LastName,
                         Phone = @Phone,
-                        ProfileImage = @ProfileImage,
+                        ProfileImage = @ProfileImage
                     WHERE Id = @Id;
                 ";
 
             using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Id", user.Id);
+
+            cmd.AddUserParametersUpdate(user);
+
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        public async Task UpdateProfileAsync(User user)
+        {
+            using var conn = _dbContext.CreateConnection();
+            await conn.OpenAsync();
+
+            const string sql = @"
+                    UPDATE Users
+                    SET
+                        FirstName = @FirstName,
+                        LastName = @LastName,
+                        Phone = @Phone,
+                        PasswordHash = @PasswordHash,
+                        ProfileImage = @ProfileImage
+                    WHERE Id = @Id;
+                ";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Id", user.Id);
+
             cmd.AddUserParametersUpdate(user);
 
             await cmd.ExecuteNonQueryAsync();
