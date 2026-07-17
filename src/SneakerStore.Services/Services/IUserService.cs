@@ -7,9 +7,13 @@ namespace SneakerStore.Services.Services
     {
         Task<int> RegisterAsync(RegisterRequest request);
         Task<User?> LoginAsync(LoginRequest request);
+
         Task<UserResponseDto?> GetByIdAsync(int id);
+
+        Task UpdateProfileAsync(UpdateProfileRequest request);
+        Task ChangePasswordAsync(ChangePassword request);
+
         Task<List<UserResponseDto>> GetAllAsync();
-        Task UpdateAsync(UpdateUserRequest request);
         Task DeleteAsync(int id);
     }
 }

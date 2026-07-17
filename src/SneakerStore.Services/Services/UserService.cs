@@ -77,7 +77,7 @@ namespace SneakerStore.Services.Services
             return await _userRepository.GetAllAsync();
         }
 
-        public async Task UpdateAsync(UpdateUserRequest request)
+        public async Task UpdateProfileAsync(UpdateProfileRequest request)
         {
             await _userRepository.UpdateAsync(request);
         }
@@ -86,6 +86,28 @@ namespace SneakerStore.Services.Services
         {
             await _userRepository.DeleteAsync(id);
         }
-        
+
+        public async Task ChangePasswordAsync(ChangePassword request)
+        {
+            var user = await _userRepository.GetUserByIdAsync(request.Id);
+
+            if (user == null)
+                throw new Exception("User 404 not found");
+
+            var result = _passwordHasher.VerifyHashedPassword(
+                    user,
+                    user.PasswordHash,
+                    request.CurrentPassword
+                );
+
+            if (result == PasswordVerificationResult.Failed)
+                throw new Exception("Current Password is incorrect");
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);
+
+
+            await _userRepository.UpdateProfileAsync(user);
+
+        }
     }
 }
