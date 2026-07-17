@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\UserController.cs~RF19c2b06a.TMP" />
     <None Remove="Data\ApplicationDbContext.cs~RF11b912d8.TMP" />
     <None Remove="Enums\OrderStatus.cs~RF11fbfa49.TMP" />
     <None Remove="Extensions\DatabaseExtensions.cs~RF11caeba1.TMP" />
@@ -17,6 +18,7 @@
     <None Remove="Models\OrderItem.cs~RFf13416b.TMP" />
     <None Remove="Models\Review.cs~RFf14ebc0.TMP" />
     <None Remove="Models\SneakerImages.cs~RF12086ccf.TMP" />
+    <None Remove="Services\IUserService.cs~RF198be1d6.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.29.2" />
     <PackageReference Include="MySqlConnector" Version="2.6.1" />
   </ItemGroup>
 
