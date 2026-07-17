@@ -21,6 +21,8 @@ namespace SneakerStore.Services.Controllers
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
             var user = await _userService.GetByIdAsync(userId);
+            if (user == null)
+                return NotFound();
 
             return View(user);
         }
@@ -31,6 +33,8 @@ namespace SneakerStore.Services.Controllers
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
             var user = await _userService.GetByIdAsync(userId);
+            if (user == null)
+                return NotFound();
 
             return View(user);
         }
@@ -52,7 +56,6 @@ namespace SneakerStore.Services.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public IActionResult ChangePassword()
         {
             return View();

@@ -39,7 +39,16 @@ namespace SneakerStore.Services.Controllers.Admin
             if (user == null)
                 return NotFound();
 
-            return View(user);
+            var request = new UpdateProfileRequest
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Phone
+            };
+
+            return View(request);
         }
 
         [HttpPost]

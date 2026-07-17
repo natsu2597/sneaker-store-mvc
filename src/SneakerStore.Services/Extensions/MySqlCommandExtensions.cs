@@ -31,6 +31,7 @@ namespace SneakerStore.Services.Extensions
             cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
             cmd.Parameters.AddWithValue("@LastName", user.LastName);
             cmd.Parameters.AddWithValue("@Phone", user.Phone);
+            cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
             cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage ?? (object)DBNull.Value);
         }
     }

@@ -53,7 +53,7 @@ namespace SneakerStore.Services.Services
 
         public async Task<User?> LoginAsync(LoginRequest request)
         {
-            var user = await _userRepository.GetByEmailAsync(request.Email) ?? throw new Exception("User not found");
+            var user = await _userRepository.GetByEmailAsync(request.Email) ?? throw new UnauthorizedAccessException("Invalid Username");
 
             var result = _passwordHasher.VerifyHashedPassword(
                     user,
@@ -62,7 +62,7 @@ namespace SneakerStore.Services.Services
                 );
 
             if (result == PasswordVerificationResult.Failed)
-                throw new Exception("Password verification failed");
+                throw new UnauthorizedAccessException("Password verification failed");
 
             return user;
         }
@@ -89,10 +89,7 @@ namespace SneakerStore.Services.Services
 
         public async Task ChangePasswordAsync(ChangePassword request)
         {
-            var user = await _userRepository.GetUserByIdAsync(request.Id);
-
-            if (user == null)
-                throw new Exception("User 404 not found");
+            var user = await _userRepository.GetUserByIdAsync(request.Id) ?? throw new Exception("User 404 not found");
 
             var result = _passwordHasher.VerifyHashedPassword(
                     user,
