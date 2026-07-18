@@ -8,13 +8,13 @@
         if (input.type === "password") {
 
             input.type = "text";
-            icon.classList.replace("bi-eye", "bi-eye-slash");
+            icon.classList.replace("bi-emoji-dizzy", "bi-emoji-expressionless");
         }
 
         else {
 
             input.type = "password";
-            icon.classList.replace("bi-eye-slash", "bi-eye");
+            icon.classList.replace("bi-emoji-expressionless", "bi-emoji-dizzy");
         }
     })
 
