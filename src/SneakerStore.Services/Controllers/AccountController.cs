@@ -92,7 +92,7 @@ namespace SneakerStore.Services.Controllers
                     );
 
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Profile");
             }
 
             catch(UnauthorizedAccessException)
