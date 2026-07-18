@@ -137,6 +137,37 @@
     background: var(--surface);
 }
 
+.password-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.password-toggle{
+    margin-left : 30px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color : var(--text-light);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color .25s ease;
+}
+
+.password-toggle:hover{
+    color: var(--primary);
+}
+
+.password-toggle:focus{
+    outline: none;
+}
+
+.password-toggle i{
+    pointer-events: none;
+}
+
 .text-danger{
     color : var(--danger);
     font-size : 14px;
