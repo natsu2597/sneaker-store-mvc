@@ -62,6 +62,12 @@
     border-radius : 999px;
 }
 
+.profile-header p{
+    margin-top : 10px;
+    opacity : 0.9;
+    color : var(--surface);
+}
+
 .profile-dp-container {
     display: flex;
     justify-content: space-between;
@@ -121,6 +127,21 @@
 
 .profile-body{
     padding : 40px
+}
+
+.profile-body .form-group{
+    margin-bottom : 22px;
+}
+
+.profile-body .form-control{
+    background: var(--surface);
+}
+
+.text-danger{
+    color : var(--danger);
+    font-size : 14px;
+    margin-top : 5px;
+    display: block;
 }
 
 .profile-item{
