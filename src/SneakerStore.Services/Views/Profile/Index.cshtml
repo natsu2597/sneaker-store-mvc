@@ -1,0 +1,84 @@
+﻿@model SneakerStore.Services.Dtos.UserResponseDto;
+
+@{
+	ViewData["Title"] = "My Profile";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}
+
+<div class="profile-container">
+	<div class="profile-card card">
+		<div class="profile-header">
+				<div class="profile-dp-container">
+					@if (!string.IsNullOrEmpty(Model.ImageUrl))
+					{
+						<img src="@Model.ImageUrl" class="profile-image" />
+					}
+
+					else
+					{
+					<img src="https://www.gravatar.com/avatar/?d=mp&s=256" class="profile-image" />
+					}
+
+					<form asp-controller="Account"
+						  asp-action="Logout"
+						  method="post"
+						  class="logout-form">
+						@Html.AntiForgeryToken()
+
+						<button type="submit" class="button button-danger">
+							Logout
+						</button>
+					</form>
+				</div>	
+
+				<h2>@Model.FirstName @Model.LastName</h2>
+
+				<p class="profile-role">
+					@Model.Role
+				</p>
+
+		</div>
+
+			
+
+			<div class="profile-body">
+
+				<div class="profile-item">
+					<label>Email</label>
+					<span>@Model.Email</span>
+				</div>
+
+				<div class="profile-item">
+					<label>Phone</label>
+					<span>@Model.Phone</span>
+				</div>
+
+				<div class="profile-item">
+					<label>Member Since</label>
+					<span>@Model.CreatedAt.ToString("dd MMM yyyyy")</span>
+				</div>
+
+			</div>
+
+			<div class="profile-footer">
+
+				<a asp-controller="Profile"
+					asp-action="Edit"
+					class="button button-primary"
+				>
+					Edit Profile
+				</a>
+
+				<a asp-controller="Profile"
+					asp-action="ChangePassword"
+					class="button button-secondary"
+				>
+					Change Password
+				</a>
+			</div>
+		
+	</div>
+</div>

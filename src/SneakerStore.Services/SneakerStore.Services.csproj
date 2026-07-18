@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\components.css~RF1ef03a2f.TMP" />
+    <Content Remove="wwwroot\css\components.css~RF1ef69ed8.TMP" />
+    <Content Remove="wwwroot\css\components.css~RF1f03ad40.TMP" />
+    <Content Remove="wwwroot\css\profile.css~RF1ee71b2a.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Controllers\UserController.cs~RF19c2b06a.TMP" />
     <None Remove="Data\ApplicationDbContext.cs~RF11b912d8.TMP" />
     <None Remove="Enums\OrderStatus.cs~RF11fbfa49.TMP" />
@@ -19,12 +26,12 @@
     <None Remove="Models\Review.cs~RFf14ebc0.TMP" />
     <None Remove="Models\SneakerImages.cs~RF12086ccf.TMP" />
     <None Remove="Services\IUserService.cs~RF198be1d6.TMP" />
+    <None Remove="Views\Account\Login.cshtml~RF1ed5de14.TMP" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\User\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Sneaker\" />
   </ItemGroup>
