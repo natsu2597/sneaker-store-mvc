@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SneakerStore.Services.Dtos;
+using SneakerStore.Services.Extensions;
 using SneakerStore.Services.Models;
 using SneakerStore.Services.Repository;
 
@@ -79,7 +80,29 @@ namespace SneakerStore.Services.Services
 
         public async Task UpdateProfileAsync(UpdateProfileRequest request)
         {
-            await _userRepository.UpdateAsync(request);
+            var user = await _userRepository.GetByIdAsync(request.Id) ?? throw new Exception("User not found");
+
+            if (await _userRepository.EmailExistsAsync(request.Email,user.Id))
+                throw new Exception("Email already exists");
+
+            if (await _userRepository.PhoneExistsAsync(request.Phone, user.Id))
+                throw new Exception("Phone number already exists");
+
+            string? imageUrl = user.ImageUrl;
+
+            if(request.ProfileImage != null)
+            {
+                var (url, _) = await _cloudinaryService.UploadImageAsync(request.ProfileImage);
+                imageUrl = url;
+            }
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.Phone = request.Phone;
+            user.ImageUrl = imageUrl;
+
+            await _userRepository.UpdateAsync(user.MapUpdateProfileToUserResponse());
         }
 
         public async Task DeleteAsync(int id)

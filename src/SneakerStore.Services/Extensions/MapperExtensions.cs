@@ -44,5 +44,18 @@ namespace SneakerStore.Services.Extensions
             };
         }
 
+        public static UpdateProfileRequest MapUpdateProfileToUserResponse(this UserResponseDto user)
+        {
+            return new UpdateProfileRequest
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Phone,
+                CurrentImageUrl = user.ImageUrl
+            };
+        }
+
     }
 }
