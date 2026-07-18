@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MySqlConnector;
 using SneakerStore.Services.Data;
+using SneakerStore.Services.Seeders;
 using System.Runtime.CompilerServices;
 
 namespace SneakerStore.Services.Extensions
@@ -10,6 +11,10 @@ namespace SneakerStore.Services.Extensions
         public static async Task InitializeDbAsync(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
+
+            var userSeeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+            await userSeeder.SeedAsync();
+
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             using var serverConn = dbContext.CreateConnection("ServerConnection");
 
