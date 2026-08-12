@@ -162,8 +162,27 @@ namespace SneakerStore.Services.Repository
                     WHERE Email = @Email;
                 ";
 
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            return Convert.ToInt32(await cmd.ExecuteScalarAsync()) > 0;
+        }
+
+        public async Task<bool> EmailExistsAsync(string email, int userId)
+        {
+            using var conn = _dbContext.CreateConnection();
+            await conn.OpenAsync();
+
+            const string sql = @"
+                    SELECT COUNT(*)
+                    FROM Users
+                    WHERE Email = @Email
+                        AND Id <> @Id;
+                ";
+
             using var cmd = new MySqlCommand(sql,conn);
             cmd.Parameters.AddWithValue("@Email",email);
+            cmd.Parameters.AddWithValue("@Id", userId);
 
             return Convert.ToInt32(await cmd.ExecuteScalarAsync()) > 0;
         }
@@ -176,16 +195,33 @@ namespace SneakerStore.Services.Repository
             const string sql = @"
                     SELECT COUNT(*)
                     FROM Users
-                    WHERE Phone = @Phone;
+                    WHERE Phone = @Phone
                 ";
 
-            using var cmd = new MySqlCommand(sql,conn);
+            using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Phone", phone);
 
             return Convert.ToInt32(await cmd.ExecuteScalarAsync()) > 0;
         }
 
-        
+        public async Task<bool> PhoneExistsAsync(string phone, int userId)
+        {
+            using var conn = _dbContext.CreateConnection();
+            await conn.OpenAsync();
+
+            const string sql = @"
+                    SELECT COUNT(*)
+                    FROM Users
+                    WHERE Phone = @Phone
+                        AND Id <> @Id;
+                ";
+
+            using var cmd = new MySqlCommand(sql,conn);
+            cmd.Parameters.AddWithValue("@Phone", phone);
+            cmd.Parameters.AddWithValue("@Id", userId);
+
+            return Convert.ToInt32(await cmd.ExecuteScalarAsync()) > 0;
+        }
 
         public async Task UpdateAsync(UpdateProfileRequest user)
         {
@@ -197,6 +233,7 @@ namespace SneakerStore.Services.Repository
                     SET
                         FirstName = @FirstName,
                         LastName = @LastName,
+                        Email = @Email,
                         Phone = @Phone,
                         ProfileImage = @ProfileImage
                     WHERE Id = @Id;
@@ -210,7 +247,7 @@ namespace SneakerStore.Services.Repository
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task UpdateProfileAsync(User user)
+        public async Task ChangePasswordAsync(User user)
         {
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();

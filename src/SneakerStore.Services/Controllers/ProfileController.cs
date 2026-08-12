@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SneakerStore.Services.Dtos;
+using SneakerStore.Services.Extensions;
 using SneakerStore.Services.Services;
 using System.Security.Claims;
 
@@ -33,10 +34,13 @@ namespace SneakerStore.Services.Controllers
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
             var user = await _userService.GetByIdAsync(userId);
+            
             if (user == null)
                 return NotFound();
+            
+            var request = user.MapUpdateProfileToUserResponse();
 
-            return View(user);
+            return View(request);
         }
 
         [HttpPost]

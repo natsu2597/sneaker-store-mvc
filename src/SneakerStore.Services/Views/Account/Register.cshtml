@@ -1,0 +1,149 @@
+﻿@model SneakerStore.Services.Dtos.RegisterRequest
+@{
+	ViewData["Title"] = "Create Account";
+}
+
+@section Styles{
+	<link rel="stylesheet"
+		  href="~/css/account.css"
+		  asp-append-version="true" />
+}
+
+<div class="account-container">
+	<div class="account-card register-card">
+		<div class="account-header">
+
+			<div class="account-logo">
+				👟
+			</div>
+
+			<h2>Create Account</h2>
+			 <p>
+				Join SneakerStore and discover premium sneakers inspired by street culture.
+			 </p>
+
+		</div>
+
+		<form 
+			asp-action="Register"
+			method="post"
+			enctype="multipart/form-data"
+			class="account-form"
+		>
+			@Html.AntiForgeryToken()
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-row">
+				<div class="form-group">
+					<label asp-for="FirstName" class="form-label">First Name</label>
+					<input asp-for="FirstName" class="form-control" placeholder="First Name"/>
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="LastName" class="form-label">Last Name</label>
+					<input asp-for="LastName" class="form-control" placeholder="Last Name" />
+					<span asp-validation-for="LastName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Email" class="form-label">Email Id</label>
+					<input asp-for="Email" class="form-control" placeholder="Email" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Phone" class="form-label">Phone Number</label>
+					<input asp-for="Phone" class="form-control" placeholder="Phone" />
+					<span asp-validation-for="Phone" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="ProfileImage" class="form-label">Profile Image</label>
+					<input asp-for="ProfileImage" type="file" class="form-control" accept="image/*" />
+					<span asp-validation-for="ProfileImage" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Password" class="form-label">Profile Image</label>
+
+					<div class="password-wrapper">
+						<input 
+							asp-for="Password" 
+							id="registerPassword" 
+							type="password" 
+							class="form-control password-input"
+							placeholder="Create a password"/>
+
+							<button type="button"
+									class="password-toggle"
+									data-target="registerPassword"
+							>
+							<i class="bi bi-emoji-dizzy"></i>
+							</button>
+						
+					</div>
+
+					<span asp-validation-for="Password" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="ConfirmPassword" class="form-label">Profile Image</label>
+
+					<div class="password-wrapper">
+						<input asp-for="ConfirmPassword"
+							   id="confirmPassword"
+							   type="password"
+							   class="form-control password-input"
+							   placeholder="Re-enter your password" />
+
+						<button type="button"
+								class="password-toggle"
+								data-target="confirmPassword">
+							<i class="bi bi-emoji-dizzy"></i>
+						</button>
+
+					</div>
+
+					<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+				</div>
+
+				<button type="submit" class="button button-primary account-submit">
+					Create Account
+				</button>
+				
+				<div class="account-divider">
+					<span>Already a member?</span>
+				</div>
+			</div>
+
+			<div class="account-links">
+
+				<span>
+					Already have an account?
+					<a asp-action="Login">
+						Sign In
+					</a>
+				</span>
+
+			</div>
+
+
+		</form>
+			
+
+
+		<div class="accou"></div>
+	</div>
+</div>
+
+
+@section Scripts {
+
+	<partial name="_ValidationScriptsPartial" />
+
+	<script src="~/js/passwordToggle.js" asp-append-version="true"></script>
+
+}
+

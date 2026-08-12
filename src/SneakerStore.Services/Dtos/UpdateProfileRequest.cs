@@ -20,6 +20,8 @@ namespace SneakerStore.Services.Dtos
         [Phone]
         public string Phone { get; set; } = "";
 
+        public string? CurrentImageUrl { get;set; }
+
         public IFormFile? ProfileImage { get; set; }
     }
 }

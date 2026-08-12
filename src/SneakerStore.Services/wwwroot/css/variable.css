@@ -1,0 +1,35 @@
+﻿:root {
+    /* Brand */
+
+    --primary: #FF6B00;
+    --primary-hover: #E65F00;
+    --secondary: #1B1B1B;
+    --accent: #FFD54F;
+    /* Background */
+
+    --background: #FFF8F1;
+    --surface: #FFFFFF;
+    /* Text */
+
+    --text: #2D2D2D;
+    --text-light: #6B7280;
+    /* Status */
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #DC2626;
+    /* Border */
+
+    --border: #E8DED3;
+    /* Radius */
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    /* Shadow */
+
+    --shadow: 0 15px 40px rgba(0,0,0,.08);
+    /* Transition */
+
+    --transition: .3s ease;
+}
