@@ -15,7 +15,7 @@ namespace SneakerStore.Services.Repository
         Task<bool> PhoneExistsAsync(string phone);
         Task<bool> PhoneExistsAsync(string phone, int userId);
         Task UpdateAsync(UpdateProfileRequest request);
-        Task UpdateProfileAsync(User user);
+        Task ChangePasswordAsync(User user);
         Task DeleteAsync(int id);
     }
 }

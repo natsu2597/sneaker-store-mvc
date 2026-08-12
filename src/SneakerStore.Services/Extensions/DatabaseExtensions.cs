@@ -12,8 +12,8 @@ namespace SneakerStore.Services.Extensions
         {
             using var scope = app.Services.CreateScope();
 
-            var userSeeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
-            await userSeeder.SeedAsync();
+            
+            
 
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             using var serverConn = dbContext.CreateConnection("ServerConnection");
@@ -43,6 +43,9 @@ namespace SneakerStore.Services.Extensions
             await InitializeOrderItemsTableAsync(conn);
             await InitializeReviewsTableAsync(conn);
             await InitializeWishlistTableAsync(conn);
+
+            var userSeeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+            await userSeeder.SeedAsync();
 
             Console.WriteLine("Database Initialization Successfully");
         }

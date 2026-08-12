@@ -126,7 +126,7 @@ namespace SneakerStore.Services.Services
             user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);
 
 
-            await _userRepository.UpdateProfileAsync(user);
+            await _userRepository.ChangePasswordAsync(user);
 
         }
     }

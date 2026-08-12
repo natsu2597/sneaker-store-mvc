@@ -1,4 +1,5 @@
-﻿@model SneakerStore.Services.Dtos.LoginRequest;
+﻿@model SneakerStore.Services.Dtos.LoginRequest
+
 @{
 	ViewData["Title"] = "Login";
 }
@@ -19,7 +20,7 @@
 		</div>
 
 		<form asp-action="Login" method="post" class="account-form">
-			<div asp-asp-validation-summary="ModelOnly" class="validation"></div>
+			<div asp-validation-summary="ModelOnly" class="validation"></div>
 
 			<div class="form-group">
 
@@ -74,7 +75,7 @@
 				</a>
 
 
-				<a asp-asp-controller="Account"
+				<a asp-controller="Account"
 					asp-action="Register"
 				>
 					Register

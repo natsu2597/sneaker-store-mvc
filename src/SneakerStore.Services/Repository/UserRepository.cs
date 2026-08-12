@@ -247,7 +247,7 @@ namespace SneakerStore.Services.Repository
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task UpdateProfileAsync(User user)
+        public async Task ChangePasswordAsync(User user)
         {
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();

@@ -10,17 +10,28 @@ namespace SneakerStore.Services.Seeders
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IConfiguration _configuration;
 
         public UserSeeder(
             ApplicationDbContext dbContext,
-            IPasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher, IConfiguration configuration)
+            
         {
             _dbContext = dbContext;
             _passwordHasher = passwordHasher;
+            _configuration = configuration;
         }
+
 
         public async Task SeedAsync()
         {
+            var adminPassword = _configuration["SeedUsers:AdminPassword"];
+            var customerPassword = _configuration["SeedUsers:CustomerPassword"];
+
+            if(string.IsNullOrWhiteSpace(adminPassword) || string.IsNullOrWhiteSpace(customerPassword))
+                throw new InvalidOperationException(
+                    "Seed user passwords are not configured. Configure them using User Secrets.");
+
             using var conn = _dbContext.CreateConnection();
             await conn.OpenAsync();
 
@@ -36,11 +47,11 @@ namespace SneakerStore.Services.Seeders
             if (count > 0)
                 return;
 
-            await SeedAdmin(conn);
-            await SeedCustomer(conn);
+            await SeedAdmin(conn,adminPassword);
+            await SeedCustomer(conn,customerPassword);
         }
 
-        private async Task SeedAdmin(MySqlConnection conn)
+        private async Task SeedAdmin(MySqlConnection conn,string password)
         {
             var admin = new User
             {
@@ -52,7 +63,7 @@ namespace SneakerStore.Services.Seeders
             };
 
             admin.PasswordHash =
-                _passwordHasher.HashPassword(admin, "Admin@123");
+                _passwordHasher.HashPassword(admin, password);
 
             const string sql = @"
                 INSERT INTO Users
@@ -89,7 +100,7 @@ namespace SneakerStore.Services.Seeders
             await cmd.ExecuteNonQueryAsync();
         }
 
-        private async Task SeedCustomer(MySqlConnection conn)
+        private async Task SeedCustomer(MySqlConnection conn,string password)
         {
             var customer = new User
             {
@@ -101,7 +112,7 @@ namespace SneakerStore.Services.Seeders
             };
 
             customer.PasswordHash =
-                _passwordHasher.HashPassword(customer, "Customer@123");
+                _passwordHasher.HashPassword(customer, password);
 
             const string sql = @"
                 INSERT INTO Users
