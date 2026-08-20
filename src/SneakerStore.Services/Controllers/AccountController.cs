@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SneakerStore.Services.Dtos;
+using SneakerStore.Services.Models;
 using SneakerStore.Services.Services;
 using System.Reflection;
 using System.Security.Claims;
@@ -11,10 +12,12 @@ namespace SneakerStore.Services.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IPasswordResetService _passwordResetService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IPasswordResetService passwordResetService)
         {
             _userService = userService;
+            _passwordResetService = passwordResetService;
         }
 
         [HttpGet]
@@ -112,5 +115,63 @@ namespace SneakerStore.Services.Controllers
 
             return RedirectToAction(nameof(Login));
         }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
+        {
+            if(!ModelState.IsValid)
+                return View(request);
+
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+
+            await _passwordResetService.PasswordResetRequestAsync(request.Email, baseUrl);
+
+            TempData["Success"] = "If an account exists with that email address, " +
+        "a password reset link has been sent.";
+
+            return RedirectToAction(nameof(Login));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string token)
+        {
+            if (!await _passwordResetService.ValidateTokenAsync(token))
+                return View("Invalid reset token!");
+
+            var model = new ResetPasswordRequest
+            {
+                Token = token
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var success = await _passwordResetService.ResetPasswordASync(request.Token, request.NewPassword);
+
+            if(!success)
+            {
+                ModelState.AddModelError("","This password reset link is invalid or has expired");
+                return View(request);
+            }
+
+            TempData["Success"] = "Password reset successfully";
+
+            return RedirectToAction(nameof(Login));
+        }
+
     }
 }
