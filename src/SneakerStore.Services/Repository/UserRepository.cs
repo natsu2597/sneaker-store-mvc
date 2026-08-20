@@ -3,6 +3,7 @@ using SneakerStore.Services.Data;
 using SneakerStore.Services.Dtos;
 using SneakerStore.Services.Extensions;
 using SneakerStore.Services.Models;
+using System.Dynamic;
 
 namespace SneakerStore.Services.Repository
 {
@@ -287,5 +288,24 @@ namespace SneakerStore.Services.Repository
             await cmd.ExecuteNonQueryAsync();
         }
 
+        public async Task UpdatePasswordAsync(int userId, string passwordHash)
+        {
+            using var conn = _dbContext.CreateConnection();
+
+            await conn.OpenAsync();
+
+            const string sql = @"
+                    UPDATE Users
+                    SET PasswordHash = @PasswordHash
+                    WHERE Id = @Id;
+                ";
+
+            using var cmd = new MySqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+            cmd.Parameters.AddWithValue("@Id", userId);
+
+            await cmd.ExecuteNonQueryAsync();
+        }
     }
 }
