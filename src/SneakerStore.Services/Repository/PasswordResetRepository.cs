@@ -62,7 +62,7 @@ namespace SneakerStore.Services.Repository
                     CreatedAt,
                     ExpiresAt,
                     IsUsed,
-                    UserAt
+                    UsedAt
             FROM PasswordResetTokens
             WHERE TokenHash = @TokenHash
             LIMIT 1;
@@ -83,7 +83,7 @@ namespace SneakerStore.Services.Repository
                 UserId = reader.GetInt32("UserId"),
                 TokenHash = reader.GetString("TokenHash"),
                 CreatedAt = reader.GetDateTime("CreatedAt"),
-                ExpiresAt = reader.GetDateTime("ExpiredAt"),
+                ExpiresAt = reader.GetDateTime("ExpiresAt"),
                 IsUsed = reader.GetBoolean("IsUsed"),
                 UsedAt = reader.IsDBNull(
                         reader.GetOrdinal("UsedAt"))
