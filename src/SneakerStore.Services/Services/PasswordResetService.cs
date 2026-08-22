@@ -12,12 +12,12 @@ namespace SneakerStore.Services.Services
         private readonly IUserRepository _userRepository;
         private readonly IPasswordResetRepository _tokenRepository;
         private readonly IEmailService _emailService;
-        private readonly PasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
         public PasswordResetService(IUserRepository userRepository,
             IPasswordResetRepository tokenRepository,
             IEmailService emailService,
-            PasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
             _tokenRepository = tokenRepository;

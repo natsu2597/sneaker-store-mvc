@@ -25,15 +25,27 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordResetRepository, PasswordResetRepository>();
+
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<UserSeeder>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 
 builder.Services.Configure<CloudinarySettings>(
         builder.Configuration.GetSection("Cloudinary")
     );
+
+var emailSettings = builder.Configuration
+    .GetSection("Email")
+    .Get<EmailSettings>()
+    ?? throw new InvalidOperationException("Email Configuration is missing");
+
+builder.Services.AddSingleton(emailSettings);
 
 var app = builder.Build();
 
