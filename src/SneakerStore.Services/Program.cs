@@ -40,6 +40,10 @@ builder.Services.Configure<CloudinarySettings>(
         builder.Configuration.GetSection("Cloudinary")
     );
 
+builder.Services.Configure<ApplicationSettings>(
+        builder.Configuration.GetSection("Application")
+    );
+
 var emailSettings = builder.Configuration
     .GetSection("Email")
     .Get<EmailSettings>()

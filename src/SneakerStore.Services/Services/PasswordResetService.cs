@@ -52,7 +52,7 @@ namespace SneakerStore.Services.Services
             await _tokenRepository.CreateAsync(resetToken);
 
             var resetUrl =
-            $"{baseUrl}/Account/ResetPassword?token=" +
+            $"{baseUrl.TrimEnd('/')}/Account/ResetPassword?token=" +
             Uri.EscapeDataString(token);
 
             await _emailService.SendPasswordResetEmailAsync(user.Email, resetUrl);
@@ -107,11 +107,11 @@ namespace SneakerStore.Services.Services
                     newPassword
                 );
 
-            await _userRepository.UpdatePasswordAsync(resetToken.Id,passwordHash);
+            await _userRepository.UpdatePasswordAsync(resetToken.UserId,passwordHash);
 
             await _tokenRepository.MarkUsedAsync(resetToken.Id);
 
-            await _tokenRepository.InvalidatUserTokenAsync(user.Id);
+            await _tokenRepository.InvalidatUserTokenAsync(resetToken.UserId);
 
             return true;
 

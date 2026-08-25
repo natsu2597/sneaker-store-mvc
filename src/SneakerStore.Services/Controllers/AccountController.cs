@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SneakerStore.Services.Dtos;
 using SneakerStore.Services.Models;
 using SneakerStore.Services.Services;
+using SneakerStore.Services.Settings;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -13,11 +14,13 @@ namespace SneakerStore.Services.Controllers
     {
         private readonly IUserService _userService;
         private readonly IPasswordResetService _passwordResetService;
+        private readonly ApplicationSettings _applicationSettings;
 
-        public AccountController(IUserService userService, IPasswordResetService passwordResetService)
+        public AccountController(IUserService userService, IPasswordResetService passwordResetService, ApplicationSettings applicationSettings)
         {
             _userService = userService;
             _passwordResetService = passwordResetService;
+            _applicationSettings = applicationSettings;
         }
 
         [HttpGet]
@@ -129,7 +132,7 @@ namespace SneakerStore.Services.Controllers
             if(!ModelState.IsValid)
                 return View(request);
 
-            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var baseUrl = _applicationSettings.PublicUrl;
 
             await _passwordResetService.PasswordResetRequestAsync(request.Email, baseUrl);
 
