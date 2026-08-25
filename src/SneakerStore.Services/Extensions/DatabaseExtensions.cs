@@ -43,6 +43,7 @@ namespace SneakerStore.Services.Extensions
             await InitializeOrderItemsTableAsync(conn);
             await InitializeReviewsTableAsync(conn);
             await InitializeWishlistTableAsync(conn);
+            await InititalizePasswordResetTokenTableASync(conn);
 
             var userSeeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
             await userSeeder.SeedAsync();
@@ -337,6 +338,39 @@ namespace SneakerStore.Services.Extensions
                 ";
 
             await ExecuteAsync(conn, sql);
+        }
+
+        public static async Task InititalizePasswordResetTokenTableASync(MySqlConnection conn)
+        {
+            const string sql = @"
+                    CREATE TABLE IF NOT EXISTS PasswordResetTokens
+                (
+                    Id INT AUTO_INCREMENT PRIMARY KEY,
+
+                    UserId INT NOT NULL,
+
+                    TokenHash VARCHAR(64) NOT NULL,
+
+                    CreatedAt DATETIME NOT NULL,
+
+                    ExpiresAt DATETIME NOT NULL,
+
+                    IsUsed BOOLEAN NOT NULL DEFAULT FALSE,
+
+                    UsedAt DATETIME NULL,
+
+                    INDEX IX_PasswordResetTokens_UserId (UserId),
+                    INDEX IX_PasswordResetTokens_TokenHash (TokenHash),
+                    INDEX IX_PasswordResetTokens_ExpiresAt (ExpiresAt),
+
+                    CONSTRAINT FK_PasswordResetTokens_User
+                        FOREIGN KEY (UserId)
+                    REFERENCES Users(Id)
+                    ON DELETE CASCADE
+                );
+                ";
+
+            await ExecuteAsync(conn,sql);
         }
     }
 
